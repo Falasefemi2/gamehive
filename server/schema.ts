@@ -1,5 +1,8 @@
 /** @format */
 
+import { config } from "dotenv";
+config();
+
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
 import { pgTableCreator, varchar } from "drizzle-orm/pg-core";
@@ -12,12 +15,11 @@ import {
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
-const databaseUrl = process.env.DATABASE_URL!;
+const databaseUrl = process.env.DATABASE_URL;
+if (!databaseUrl) throw new Error("DATABASE_URL is not set");
 
-// const schemaMatch = databaseUrl.match(/branch=([^&]+)/);
-// const schemaName = schemaMatch ? schemaMatch[1] : "public";
 const schemaMatch = databaseUrl.match(/branch=([^&]+)/);
-const schemaName = schemaMatch ? schemaMatch[1] : "public"; // This defaults to "public"
+const schemaName = schemaMatch ? schemaMatch[1] : "public";
 
 const pgTable = pgTableCreator((name) => `${schemaName}.${name}`);
 

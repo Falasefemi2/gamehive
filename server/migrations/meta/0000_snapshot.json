@@ -1,0 +1,306 @@
+{
+  "id": "eb7c9b78-63a5-4578-bf29-b306e41dcac7",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.public.game_game_platforms": {
+      "name": "public.game_game_platforms",
+      "schema": "",
+      "columns": {
+        "game_id": {
+          "name": "game_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "platform_id": {
+          "name": "platform_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "public.game_game_platforms_game_id_public.game_games_id_fk": {
+          "name": "public.game_game_platforms_game_id_public.game_games_id_fk",
+          "tableFrom": "public.game_game_platforms",
+          "tableTo": "public.game_games",
+          "columnsFrom": [
+            "game_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "public.game_game_platforms_platform_id_public.game_platforms_id_fk": {
+          "name": "public.game_game_platforms_platform_id_public.game_platforms_id_fk",
+          "tableFrom": "public.game_game_platforms",
+          "tableTo": "public.game_platforms",
+          "columnsFrom": [
+            "platform_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "public.game_game_platforms_game_id_platform_id_pk": {
+          "name": "public.game_game_platforms_game_id_platform_id_pk",
+          "columns": [
+            "game_id",
+            "platform_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.public.game_games": {
+      "name": "public.game_games",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "thumbnail": {
+          "name": "thumbnail",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "short_description": {
+          "name": "short_description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "game_url": {
+          "name": "game_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "genre": {
+          "name": "genre",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "publisher": {
+          "name": "publisher",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "developer": {
+          "name": "developer",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "release_date": {
+          "name": "release_date",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "freetogame_profile_url": {
+          "name": "freetogame_profile_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.public.game_libraries": {
+      "name": "public.game_libraries",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "game_id": {
+          "name": "game_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "added_at": {
+          "name": "added_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "public.game_libraries_user_id_public.game_users_id_fk": {
+          "name": "public.game_libraries_user_id_public.game_users_id_fk",
+          "tableFrom": "public.game_libraries",
+          "tableTo": "public.game_users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "public.game_libraries_game_id_public.game_games_id_fk": {
+          "name": "public.game_libraries_game_id_public.game_games_id_fk",
+          "tableFrom": "public.game_libraries",
+          "tableTo": "public.game_games",
+          "columnsFrom": [
+            "game_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "public.game_libraries_user_id_game_id_pk": {
+          "name": "public.game_libraries_user_id_game_id_pk",
+          "columns": [
+            "user_id",
+            "game_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "public.public.game_platforms": {
+      "name": "public.game_platforms",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "public.game_platforms_name_unique": {
+          "name": "public.game_platforms_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      }
+    },
+    "public.public.game_users": {
+      "name": "public.game_users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "profile_picture_url": {
+          "name": "profile_picture_url",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "public.game_users_username_unique": {
+          "name": "public.game_users_username_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "username"
+          ]
+        },
+        "public.game_users_email_unique": {
+          "name": "public.game_users_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        }
+      }
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

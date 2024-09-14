@@ -103,3 +103,16 @@ export const gamesRelations = relations(games, ({ many }) => ({
 export const platformsRelations = relations(platforms, ({ many }) => ({
   games: many(gamePlatforms),
 }));
+
+export type NewGame = {
+  id: number;
+  title: string;
+  thumbnail: string;
+  shortDescription: string;
+  gameUrl: string;
+  genre: string;
+  publisher: string;
+  developer: string;
+  releaseDate: string;
+  freetogameProfileUrl: string;
+};

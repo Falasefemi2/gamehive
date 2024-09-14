@@ -17,8 +17,8 @@ export const BannerGames = ({ games }) => {
     ));
 
     return (
-        <div className="w-full h-full py-20">
-            <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans mb-8">
+        <div className="w-full h-full">
+            <h2 className="max-w-7xl pl-4 mx-auto md:text-5xl font-sans mb-8 font-medium text-2xl my-6 mt-16">
                 Featured Games
             </h2>
             <Carousel items={carouselCards} />
@@ -28,9 +28,9 @@ export const BannerGames = ({ games }) => {
 
 const GameContent = ({ game }) => {
     return (
-        <div className="bg-[#F5F5F7] p-8 md:p-14 rounded-3xl mb-4">
-            <p className="text-neutral-600 text-base md:text-2xl font-sans max-w-3xl mx-auto">
-                <span className="font-bold text-neutral-700">{game.title}</span>{" "}
+        <div className="bg-epic-600 p-8 md:p-14 rounded-3xl mb-4">
+            <p className="text-base md:text-2xl font-sans max-w-3xl mx-auto">
+                <span className="font-bold">{game.title}</span>{" "}
                 {game.shortDescription}
             </p>
             <Image

@@ -17,7 +17,7 @@ export const BannerGames = ({ games }) => {
     ));
 
     return (
-        <div className="w-full h-full">
+        <div>
             <h2 className="max-w-7xl pl-4 mx-auto md:text-5xl font-sans mb-8 font-medium text-2xl my-6 mt-16">
                 Featured Games
             </h2>

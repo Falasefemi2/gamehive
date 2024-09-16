@@ -2,6 +2,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Heart } from "lucide-react"
 import Image from "next/image"
+import { ChevronRight } from "lucide-react"
 
 interface IAppProps {
     imagePath: string
@@ -10,9 +11,11 @@ interface IAppProps {
     userId?: string | undefined
     isInLibrary?: boolean
     libraryId?: string | undefined
+    onNextPage?: () => void
+    hasNextPage?: boolean
 }
 
-export default function GamingCard({ imagePath, description, title }: IAppProps) {
+export default function GamingCard({ imagePath, description, title, onNextPage, hasNextPage }: IAppProps) {
     return (
         <Card className="w-[300px] relative">
             <CardHeader className="p-0">
@@ -27,8 +30,13 @@ export default function GamingCard({ imagePath, description, title }: IAppProps)
                 <h3 className="text-lg font-semibold line-clamp-2">{title}</h3>
                 <p className="text-sm line-clamp-2">{description}</p>
             </CardContent>
-            <CardFooter>
-                <Button className="w-full">Buy Now</Button>
+            <CardFooter className="flex justify-between">
+                <Button className="flex-1">Buy Now</Button>
+                {hasNextPage && (
+                    <Button onClick={onNextPage} variant="outline" className="ml-2">
+                        <ChevronRight className="h-4 w-4" />
+                    </Button>
+                )}
             </CardFooter>
         </Card>
     )

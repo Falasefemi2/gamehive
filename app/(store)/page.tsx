@@ -13,6 +13,8 @@ export default async function Home() {
             <GamesPagination
                 initialGames={initialGamesData.allGame}
                 initialTotalPages={initialGamesData.totalPages}
+                initialPageSize={12}
+                initialTotalGames={initialGamesData.totalGames}
             />
         </>
     )

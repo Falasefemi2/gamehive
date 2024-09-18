@@ -1,34 +1,43 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { getAllGamesWithPagination } from '@/app/action'
 import GamingCard from '@/components/FeaturedGames/GamingCard'
 import { Button } from "@/components/ui/button"
+import { useInfiniteQuery } from '@tanstack/react-query'
 
-export default function GamesPagination({ initialGames, initialTotalPages }) {
-    const [games, setGames] = useState(initialGames)
-    const [currentPage, setCurrentPage] = useState(1)
-    const [totalPages, setTotalPages] = useState(initialTotalPages)
-    const [isLoading, setIsLoading] = useState(false)
+export default function GamesPagination({ initialGames, initialTotalPages, initialPageSize, initialTotalGames }) {
+    const {
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+    } = useInfiniteQuery({
+        queryKey: ['games'],
+        queryFn: ({ pageParam = 1 }) => getAllGamesWithPagination(pageParam),
+        getNextPageParam: (lastPage, pages) => {
+            if (pages.length < lastPage.totalPages) {
+                return pages.length + 1
+            }
+            return undefined
+        },
+        initialData: {
+            pages: [{
+                allGame: initialGames,
+                totalPages: initialTotalPages,
+                currentPage: 1,
+                pageSize: initialPageSize,
+                totalGames: initialTotalGames
+            }],
+            pageParams: [1],
+        },
+        initialPageParam: 1,
+    })
 
-    useEffect(() => {
-        if (currentPage > 1) {
-            loadGames(currentPage)
-        }
-    }, [currentPage])
-
-    const loadGames = async (page: number) => {
-        setIsLoading(true)
-        const result = await getAllGamesWithPagination(page)
-        setGames(prevGames => [...prevGames, ...result.allGame])
-        setTotalPages(result.totalPages)
-        setIsLoading(false)
-    }
-
+    const games = data?.pages.flatMap(page => page.allGame) ?? []
 
     const handleLoadMore = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(prev => prev + 1)
+        if (hasNextPage) {
+            fetchNextPage()
         }
     }
 
@@ -44,13 +53,13 @@ export default function GamesPagination({ initialGames, initialTotalPages }) {
                     />
                 ))}
             </div>
-            {games.length >= 12 && currentPage < totalPages && (
+            {games.length >= 12 && hasNextPage && (
                 <Button
                     onClick={handleLoadMore}
-                    disabled={isLoading}
+                    disabled={isFetchingNextPage}
                     className="mt-4"
                 >
-                    {isLoading ? 'Loading...' : 'Load More'}
+                    {isFetchingNextPage ? 'Loading...' : 'Load More'}
                 </Button>
             )}
         </div>

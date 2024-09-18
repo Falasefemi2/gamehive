@@ -5,6 +5,7 @@ import {
   ClerkProvider,
 } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
+import { QueryProvider } from "@/lib/query";
 
 
 const geistSans = localFont({
@@ -42,14 +43,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={clerkAppearance}>
-      <html lang="en" suppressHydrationWarning className="bg-epic-500">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+    <QueryProvider>
+      <ClerkProvider appearance={clerkAppearance}>
+        <html lang="en" suppressHydrationWarning className="bg-epic-500">
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            {children}
+          </body>
+        </html>
+      </ClerkProvider>
+    </QueryProvider>
   );
 }

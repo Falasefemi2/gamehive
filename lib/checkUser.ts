@@ -10,30 +10,29 @@ export async function CheckUser() {
     if (!user) {
       return null;
     }
+
     // Check if user is in db
-    const existingUser = await db
+    let dbUser = await db
       .select()
       .from(users)
       .where(eq(users.id, user.id))
       .limit(1);
 
-    if (existingUser.length > 0) {
-      // User already exists in the database
-      return existingUser[0];
-    } else {
+    if (dbUser.length === 0) {
       // User doesn't exist, create a new one
       const newUser = {
         authId: user.id,
         email: user.emailAddresses[0]?.emailAddress ?? "",
         profilePictureUrl: user.imageUrl ?? "",
-        username: user.username ?? `user_${user.id}`, // Generate a username if not provided
+        username: user.username ?? `user_${user.id}`,
         firstName: user.firstName ?? "",
         lastName: user.lastName ?? "",
       };
 
-      const insertedUser = await db.insert(users).values(newUser).returning();
-      return insertedUser[0];
+      dbUser = await db.insert(users).values(newUser).returning();
     }
+
+    return dbUser[0];
   } catch (error) {
     console.error("Error in CheckUser:", error);
     return null;

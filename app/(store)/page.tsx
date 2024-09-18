@@ -1,11 +1,10 @@
 import { BannerGames } from "@/components/FeaturedGames/BannerGames";
 import { getAllGamesWithPagination, getSevenGameThumbnails } from "@/app/action";
 import GamesPagination from "@/components/FeaturedGames/GamingPagination";
-// import GamesPagination from "@/components/GamesPagination";
 
 export default async function Home() {
     const games = await getSevenGameThumbnails();
-    const initialGamesData = await getAllGamesWithPagination();
+    const initialGamesData = await getAllGamesWithPagination(1, 12); // Specify 12 games per page
 
     return (
         <>

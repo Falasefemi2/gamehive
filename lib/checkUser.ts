@@ -21,6 +21,7 @@ export async function CheckUser() {
     if (dbUser.length === 0) {
       // User doesn't exist, create a new one
       const newUser = {
+        id: user.id, // Add this line
         authId: user.id,
         email: user.emailAddresses[0]?.emailAddress ?? "",
         profilePictureUrl: user.imageUrl ?? "",

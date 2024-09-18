@@ -3,6 +3,7 @@ import React from 'react'
 import MobileNav from '../Sidebar/MobileNav'
 import SearchBar from '../Search'
 import { CheckUser } from '@/lib/checkUser'
+import Link from 'next/link'
 
 // import { SearchBar } from '..'
 
@@ -19,12 +20,14 @@ async function Navbar() {
 
                 <SearchBar basePath="search" />
             </div>
-            {user && (
+            {user ? (
                 <UserButton
-                    afterSignOutUrl="/"
+                    afterSignOutUrl="/sign-up"
                     userProfileMode="navigation"
                     userProfileUrl="/user-profile"
                 />
+            ) : (
+                <Link href="/sign-up" className="btn btn-primary" prefetch={false}>Sign Up</Link>
             )}
         </div>
     )

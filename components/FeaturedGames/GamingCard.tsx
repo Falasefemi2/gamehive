@@ -1,30 +1,63 @@
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+"use client";
+
+import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Heart } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+// import { addGameToLibrary } from "./actions"
+import { useTransition } from "react"
+import { useUser } from "@clerk/nextjs"
+import { useState } from "react"
+import { addGameToLibrary } from "@/app/action";
 
 interface IAppProps {
     id: number
     imagePath: string
     description: string
     title: string
-    userId?: string | undefined
     isInLibrary?: boolean
     libraryId?: string | undefined
     onNextPage?: () => void
     hasNextPage?: boolean
 }
 
-export default function GamingCard({ id, imagePath, description, title }: IAppProps) {
+export default function GamingCard({ id, imagePath, description, title, isInLibrary }: IAppProps) {
+    const [isPending, startTransition] = useTransition()
+    const { user } = useUser()
+    const [inLibrary, setInLibrary] = useState(isInLibrary)
+
+    const handleAddToLibrary = async () => {
+        startTransition(async () => {
+            try {
+                await addGameToLibrary(id)
+                setInLibrary(true)
+            } catch (error) {
+                console.error("Failed to add game to library:", error)
+            }
+        })
+    }
+
     return (
         <Card className="w-[300px] relative">
             <CardHeader className="p-0">
                 <div className="relative h-[200px] w-full">
                     <Image src={imagePath} alt={title} layout="fill" objectFit="cover" />
-                    <Button size="icon" variant="ghost" className="absolute top-2 right-2 text-white hover:text-red-500">
-                        <Heart className="h-6 w-6" />
-                    </Button>
+                    {!inLibrary && (
+                        <form action={handleAddToLibrary}>
+                            <Button
+                                type="submit"
+                                className="absolute top-2 right-2"
+                                disabled={isPending || !user}
+                            >
+                                {isPending ? "Adding..." : "Add to Favorites"}
+                            </Button>
+                        </form>
+                    )}
+                    {inLibrary && (
+                        <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 rounded">
+                            In Library
+                        </div>
+                    )}
                 </div>
             </CardHeader>
             <CardContent className="pt-4">

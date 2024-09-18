@@ -20,13 +20,12 @@ async function Navbar() {
 
                 <SearchBar basePath="search" />
             </div>
-            {user ? (
-                <UserButton
-                    afterSignOutUrl="/sign-up"
-                    userProfileMode="navigation"
-                    userProfileUrl="/user-profile"
-                />
-            ) : (
+            <UserButton
+                afterSignOutUrl="/sign-up"
+                userProfileMode="navigation"
+                userProfileUrl="/user-profile"
+            />
+            {!user && (
                 <Link href="/sign-up" className="btn btn-primary" prefetch={false}>Sign Up</Link>
             )}
         </div>

@@ -2,9 +2,10 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Heart } from "lucide-react"
 import Image from "next/image"
-
+import Link from "next/link"
 
 interface IAppProps {
+    id: number
     imagePath: string
     description: string
     title: string
@@ -15,7 +16,7 @@ interface IAppProps {
     hasNextPage?: boolean
 }
 
-export default function GamingCard({ imagePath, description, title }: IAppProps) {
+export default function GamingCard({ id, imagePath, description, title }: IAppProps) {
     return (
         <Card className="w-[300px] relative">
             <CardHeader className="p-0">
@@ -31,7 +32,9 @@ export default function GamingCard({ imagePath, description, title }: IAppProps)
                 <p className="text-sm line-clamp-2">{description}</p>
             </CardContent>
             <CardFooter>
-                <Button className="w-full">Buy Now</Button>
+                <Link href={`/game/${id}`} className="w-full">
+                    <Button className="w-full">View Details</Button>
+                </Link>
             </CardFooter>
         </Card>
     )

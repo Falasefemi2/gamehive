@@ -47,6 +47,7 @@ export default function GamesPagination({ initialGames, initialTotalPages, initi
                 {games.map(game => (
                     <GamingCard
                         key={game.id}
+                        id={game.id}
                         imagePath={game.thumbnail}
                         title={game.title}
                         description={game.shortDescription}

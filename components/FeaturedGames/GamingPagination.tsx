@@ -43,7 +43,7 @@ export default function GamesPagination({ initialGames, initialTotalPages, initi
 
     return (
         <div className="flex flex-col items-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 p-4">
                 {games.map(game => (
                     <GamingCard
                         key={game.id}
@@ -55,14 +55,17 @@ export default function GamesPagination({ initialGames, initialTotalPages, initi
                 ))}
             </div>
             {games.length >= 12 && hasNextPage && (
-                <Button
-                    onClick={handleLoadMore}
-                    disabled={isFetchingNextPage}
-                    className="mt-4"
-                >
-                    {isFetchingNextPage ? 'Loading...' : 'Load More'}
-                </Button>
+                <div className="flex justify-center mt-4">
+                    <Button
+                        onClick={handleLoadMore}
+                        disabled={isFetchingNextPage}
+                        className="mt-4"
+                    >
+                        {isFetchingNextPage ? 'Loading...' : 'Load More'}
+                    </Button>
+                </div>
             )}
         </div>
+
     )
 }
